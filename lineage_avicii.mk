@@ -12,9 +12,9 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 $(call inherit-product, device/oneplus/avicii/device.mk)
 
 # Inherit some common PixelExperience stuff.
-$(call inherit-product, vendor/aosp/config/common_full_phone.mk)
+$(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 
-PRODUCT_NAME := aosp_avicii
+PRODUCT_NAME := lineage_avicii
 PRODUCT_DEVICE := avicii
 PRODUCT_MANUFACTURER := OnePlus
 PRODUCT_BRAND := OnePlus
@@ -30,3 +30,14 @@ PRODUCT_BUILD_PROP_OVERRIDES += \
     TARGET_DEVICE=$(PRODUCT_SYSTEM_DEVICE) \
     TARGET_PRODUCT=$(PRODUCT_SYSTEM_NAME)
 
+# RiceDroid Properties
+RICE_MAINTAINER := Sreeshankar K
+RICE_CHIPSET := Snapdragon 765G 5G
+RICE_PACKAGE_TYPE := PIXEL
+SUSHI_BOOTANIMATION := 1080
+WITH_GMS := true
+TARGET_USE_GOOGLE_TELEPHONY := true
+WITH_FOD_ANIMATIONS := true
+TARGET_HAS_UDFPS := true
+TARGET_SUPPORTS_NEXT_GEN_ASSISTANT := true
+TARGET_USES_BLUR := true   
