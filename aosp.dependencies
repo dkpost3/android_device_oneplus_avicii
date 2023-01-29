@@ -5,14 +5,14 @@
     "remote": "pixel"
   },
   {
-    "repository": "kernel_oneplus_sm7250",
-    "target_path": "kernel/oneplus/sm7250",
-    "branch": "thirteen"
+    "repository": "kernel_oneplus_avicii",
+    "target_path": "kernel/oneplus/avicii",
+    "branch": "thirteen-wip"
   },
   {
     "repository": "vendor_oneplus_avicii",
     "target_path": "vendor/oneplus/avicii",
-    "branch": "thirteen"
+    "branch": "thirteen-wip"
   },
   {
     "repository": "vendor_oneplus-firmware",
