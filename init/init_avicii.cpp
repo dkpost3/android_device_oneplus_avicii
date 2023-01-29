@@ -7,47 +7,50 @@
 #include <android-base/properties.h>
 
 #define _REALLY_INCLUDE_SYS__SYSTEM_PROPERTIES_H_
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/sysinfo.h>
-#include <sys/system_properties.h>
 #include <sys/_system_properties.h>
 
-#include "property_service.h"
-#include "vendor_init.h"
-
 using android::base::GetProperty;
-using std::string;
-
-std::vector<std::string> ro_props_default_source_order = {
-    "",
-    "odm.",
-    "product.",
-    "system.",
-    "system_ext.",
-    "vendor.",
-    "vendor_dlkm."
-};
 
 /*
  * SetProperty does not allow updating read only properties and as a result
- * does not work for our use case. Write "property_override" to do practically
+ * does not work for our use case. Write "OverrideProperty" to do practically
  * the same thing as "SetProperty" without this restriction.
  */
+void OverrideProperty(const char* name, const char* value) {
+    size_t valuelen = strlen(value);
 
-void property_override(char const prop[], char const value[], bool add = true) {
-    prop_info *pi;
-
-    pi = (prop_info*) __system_property_find(prop);
-    if (pi)
-        __system_property_update(pi, value, strlen(value));
-    else if (add)
-        __system_property_add(prop, strlen(prop), value, strlen(value));
+    prop_info* pi = (prop_info*)__system_property_find(name);
+    if (pi != nullptr) {
+        __system_property_update(pi, value, valuelen);
+    } else {
+        __system_property_add(name, strlen(name), value, valuelen);
+    }
 }
 
-
+/*
+ * Only for read-only properties. Properties that can be wrote to more
+ * than once should be set in a typical init script (e.g. init.oplus.hw.rc)
+ * after the original property has been set.
+ */
 void vendor_load_properties() {
+    auto device = GetProperty("ro.product.product.device", "");
+    auto rf_version = std::stoi(GetProperty("ro.boot.rf_version", "0"));
 
-    property_override("ro.rice.chipset", "Snapdragon 765G 5G");
-    property_override("ro.rice.maintainer", "Sreeshankar K");
+    switch (rf_version) {
+        case 13: // IN
+            OverrideProperty("ro.product.product.model", "AC2001");
+            break;
+        case 14: // EU
+            OverrideProperty("ro.product.product.model", "AC2003");
+            break;
+        case 15: // NA
+            OverrideProperty("ro.product.product.model", "AC2005");
+            break;
+        default:
+            LOG(ERROR) << "Unexpected RF version: " << rf_version;
+
+// RiceDroid prop overrides            
+            OverrideProperty("ro.rice.chipset", "Snapdragon 765G 5G");
+    	    OverrideProperty("ro.rice.maintainer", "Sreeshankar K");
+    }
 }
