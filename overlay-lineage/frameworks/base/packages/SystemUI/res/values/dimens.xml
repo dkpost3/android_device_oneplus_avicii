@@ -18,5 +18,15 @@
     <!-- Udfps animation -->
     <dimen name="udfps_animation_size">176dp</dimen>
     <dimen name="udfps_animation_offset">0dp</dimen>
-
+    
+    <!-- Alert Slider UI -->
+    <dimen name="tri_state_down_dialog_position_l">503px</dimen>
+    <dimen name="tri_state_middle_dialog_position_l">503px</dimen>
+    <dimen name="tri_state_up_dialog_position_l">503px</dimen>
+    <dimen name="tri_state_up_dialog_position_deep">24px</dimen>
+    <dimen name="tri_state_up_dialog_position_deep_land">21px</dimen>
+    <dimen name="tri_state_down_dialog_position">627px</dimen>
+    <dimen name="tri_state_middle_dialog_position">480px</dimen>
+    <dimen name="tri_state_up_dialog_position">336px</dimen>
+    
 </resources>
